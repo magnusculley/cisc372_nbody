@@ -5,7 +5,14 @@
 #include "config.h"
 
 #define THREADS_PER_BLOCK 256
-#define CUDA_CHECK(err) { if (err != cudaSuccess) { fprintf(stderr, "CUDA Error: %s\n", cudaGetErrorString(err)); exit(1); } }
+#define CUDA_CHECK(err)                                                   \
+    {                                                                     \
+        if (err != cudaSuccess)                                           \
+        {                                                                 \
+            fprintf(stderr, "CUDA Error: %s\n", cudaGetErrorString(err)); \
+            exit(1);                                                      \
+        }                                                                 \
+    }
 
 // Device memory pointers (external, defined in nbody.c)
 extern vector3 *d_hVel, *d_hPos;
