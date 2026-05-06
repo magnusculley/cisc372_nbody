@@ -25,17 +25,18 @@ extern "C"
                 continue;
 
             vector3 distance;
-            distance[0] = pos[j][0] - pos[i][0];
-            distance[1] = pos[j][1] - pos[i][1];
-            distance[2] = pos[j][2] - pos[i][2];
+            for (int k = 0; k < 3; k++)
+            {
+                distance[k] = pos[j][k] - pos[i][k];
+            }
 
             double magnitude_sq = distance[0] * distance[0] + distance[1] * distance[1] + distance[2] * distance[2];
             double magnitude = sqrt(magnitude_sq);
             double accelmag = -1 * GRAV_CONSTANT * mass[j] / magnitude_sq;
-
-            acc[i][0] += accelmag * distance[0] / magnitude;
-            acc[i][1] += accelmag * distance[1] / magnitude;
-            acc[i][2] += accelmag * distance[2] / magnitude;
+            for (int k = 0; k < 3; k++)
+            {
+            acc[i][k] += accelmag * distance[k] / magnitude;
+            }
         }
     }
 
@@ -45,14 +46,14 @@ extern "C"
         int i = blockIdx.x * blockDim.x + threadIdx.x;
         if (i >= n)
             return;
-
-        vel[i][0] += acc[i][0] * INTERVAL;
-        vel[i][1] += acc[i][1] * INTERVAL;
-        vel[i][2] += acc[i][2] * INTERVAL;
-
-        pos[i][0] += vel[i][0] * INTERVAL;
-        pos[i][1] += vel[i][1] * INTERVAL;
-        pos[i][2] += vel[i][2] * INTERVAL;
+        for (int k = 0; k < 3; k++)
+        {
+            vel[i][k] += acc[i][k] * INTERVAL;
+        }
+        for (int k = 0; k < 3; k++)
+        {        
+            pos[i][k] += vel[i][k] * INTERVAL;
+        }
     }
 
     // initialize device memory
