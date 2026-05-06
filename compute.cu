@@ -102,9 +102,11 @@ extern "C"
 
         // Accumulate forces
         accumulateForces<<<blocks, THREADS_PER_BLOCK>>>(d_hPos, d_acc, d_mass, numObjects);
+        cudaDeviceSynchronize();
 
         // Update positions and velocities
         moveBodies<<<blocks, THREADS_PER_BLOCK>>>(d_hPos, d_hVel, d_acc, numObjects);
+        cudaDeviceSynchronize();
 
         // Copy results back to host
         copyFromDevice(hPos, hVel, numObjects);
