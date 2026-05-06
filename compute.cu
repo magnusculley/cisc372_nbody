@@ -25,9 +25,9 @@ extern "C"
                 continue;
 
             vector3 distance;
-            distance[0] = pos[j][0] - pos[i][0];
-            distance[1] = pos[j][1] - pos[i][1];
-            distance[2] = pos[j][2] - pos[i][2];
+            distance[0] = pos[i][0] - pos[j][0];
+            distance[1] = pos[i][1] - pos[j][1];
+            distance[2] = pos[i][2] - pos[j][2];
 
             double magnitude_sq = distance[0] * distance[0] + distance[1] * distance[1] + distance[2] * distance[2];
             double magnitude = sqrt(magnitude_sq);
